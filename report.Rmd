@@ -1,0 +1,31 @@
+---
+title: "Penguins Report"
+output: html_document
+date: "2023-05-31"
+params:
+  penguin_island: "Torgersen"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+This is a report about penguins on `r params$penguin_island` island.
+
+```{r}
+penguins %>% 
+  filter(island == params$penguin_island) %>% 
+  group_by(sex) %>% 
+  summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE)) %>% 
+  ggplot(aes(x = sex, y = mean_bill_length)) +
+  geom_col()
+```
+
+
